@@ -26,7 +26,7 @@ kind: Service
 metadata:
   name: deployment-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: my-pod-deploy
   ports:
