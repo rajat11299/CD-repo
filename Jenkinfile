@@ -74,7 +74,6 @@ pipeline {
             }
         }
     }
-    /*
     post {
         success {
             echo 'Pipeline succeeded'
@@ -88,5 +87,5 @@ pipeline {
                  subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
                  body: "The pipeline ${env.BUILD_URL} has failed. Check the logs for details."
         }
-    } */
+    }
 }
