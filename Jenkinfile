@@ -20,7 +20,7 @@ pipeline {
             }
         }
         
-        stage('login to GCP') {
+        stage('GCP authentication') {
             steps {
                 withCredentials([file(credentialsId: 'google_service_account_key_id', variable: 'GCLOUD_CREDS')]) {
                     sh '''
@@ -32,7 +32,7 @@ pipeline {
             }
         }
         
-        stage('Validate Image Existence') {
+        stage('Artifact image existance') {
             steps {
                 script {
                     def result = sh(returnStdout: true, script: "gcloud artifacts docker images list ${params.IMAGE_NAME} --include-tags")
@@ -55,7 +55,7 @@ pipeline {
             }
         }
         
-        stage('Create Namespace if Not Exists') {
+        stage('Namespace creation') {
             steps {
                 script {
                     def exists = sh(script: "kubectl get namespace ${NAMESPACE} -o yaml", returnStatus: true) == 0
