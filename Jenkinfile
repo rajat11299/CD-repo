@@ -76,7 +76,7 @@ pipeline {
     }
     post {
         success {
-            echo 'Pipeline succeeded'
+            echo 'Pipeline succeeded!'
             mail to: 'rajat11299@gmail.com',
                  subject: "Pipeline Succeeded: ${currentBuild.fullDisplayName}",
                  body: "The pipeline ${env.BUILD_URL} has successfully completed."
