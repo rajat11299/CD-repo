@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pod-deployment1
-  namespace: testing
 spec:
   replicas: 3
   selector:
@@ -26,7 +25,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: deployment-service
-  namespace: testing
 spec:
   type: ClusterIP
   selector:
