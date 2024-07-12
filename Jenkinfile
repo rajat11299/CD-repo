@@ -72,6 +72,8 @@ pipeline {
         stage('Deploy to GKE'){
             steps{
                 sh '''
+                sed -i 's|\${Application_name}|${params.Application_name}|g' deployment.yaml
+                sed -i 's|\${Tags}|${params.Tags}|g' deployment.yaml
                 kubectl apply -f deployment.yaml -f ingress.yaml -n ${NAMESPACE}
                 kubectl apply -f ingress.yaml -n ${NAMESPACE}
                 '''
