@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     parameters {
-        string(name: 'Application_name')
+        string(name: 'Image_name')
         string(name: 'Tags')
         string(name: 'NAMESPACE')
     }
@@ -36,11 +36,11 @@ pipeline {
         stage('Artifact image existance') {
             steps {
                 script {
-                    def result = sh(returnStdout: true, script: "gcloud artifacts files list --project=charged-gravity-425405-j6 --repository=docker-image --location=asia-east1 --package=${params.Application_name} --tag=${params.Tags}")
+                    def result = sh(returnStdout: true, script: "gcloud artifacts files list --project=charged-gravity-425405-j6 --repository=docker-image --location=asia-east1 --package=${params.Image_name} --tag=${params.Tags}")
                     if (result.trim() != "") {
-                        echo "Image asia-east1-docker.pkg.dev/charged-gravity-425405-j6/docker-image/${params.Application_name}:${params.Tags} exists in Artifact Registry!"
+                        echo "Image asia-east1-docker.pkg.dev/charged-gravity-425405-j6/docker-image/${params.Image_name}:${params.Tags} exists in Artifact Registry!"
                     } else {
-                        error "Image asia-east1-docker.pkg.dev/charged-gravity-425405-j6/docker-image/${params.Application_name}:${params.Tags} does not exist in Artifact Registry. Aborting deployment."
+                        error "Image asia-east1-docker.pkg.dev/charged-gravity-425405-j6/docker-image/${params.Image_name}:${params.Tags} does not exist in Artifact Registry. Aborting deployment."
                     }
                 }
             }
@@ -72,7 +72,7 @@ pipeline {
         stage('Deploy to GKE'){
             steps{
                 sh '''
-                sed -i 's|\${Application_name}|${params.Application_name}|g' deployment.yaml
+                sed -i 's|\${Application_name}|${params.Image_name}|g' deployment.yaml
                 sed -i 's|\${Tags}|${params.Tags}|g' deployment.yaml
                 kubectl apply -f deployment.yaml -f ingress.yaml -n ${NAMESPACE}
                 kubectl apply -f ingress.yaml -n ${NAMESPACE}
