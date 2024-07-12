@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: my-container
-          image: asia-east1-docker.pkg.dev/charged-gravity-425405-j6/docker-image/${Application_name}:${Tags}
+          image: asia-east1-docker.pkg.dev/charged-gravity-425405-j6/docker-image/java-application-new:latest
           ports:
             - containerPort: 8080
 
